@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>The Surya System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital@0;1&display=swap" rel="stylesheet">
+  <!-- <script type="text/javascript" src="index.js"></script> -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="imgs/favicon.png">
+</head>
+
+<body>
+<div class = "grid">
+  <div id="nav">
+    <div id = "sidenav">
+      <a href = '#content'><span>^</span></a>
+      <a href = '#demo'><span>Demo</span></a>
+      <a href = '#abstract'><span>Abstract</span></a>
+      <a href = '#story'><span>The Story</span></a>
+      <a href = '#how'><span>How it Works</span></a>
+      <a href = '#thesis'><span>Thesis</span></a>
+      <a href = '#about'><span>About</span></a>
+    </div>
+
+  </div>
+<!-- </div>
+
+<div class = "grid"> -->
+  <div id="content">
+    <h1>The Surya System</h1>
+    <h2>A real-time rhythm visualization system, specially built for tabla and tihai performances.</h2>
+    <p></p>
+
+    <section id="demo">
+      <h3>Demo</h3>
+      <!-- 1820x780 -->
+      <div class="container">
+        <iframe src="https://www.youtube.com/embed/dDFq0oEb-Ec" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class = "video"></iframe>
+      </div>
+    </section>
+
+    <section id="abstract">
+      <h3>Abstract</h3>
+      <p>In Hindustani classical music, the tabla, a type of paired drums, is an important aspect of creating music and beats. A cadential technique often used by tabla players are tihais, which are improvised, rhythmic phrases that are repeated three times to signal the end of an improvisation, section, or piece. In order to extend audiences’ understanding and enjoyment of a tabla performance, I built a program with a visualization system for displaying the rhythmic cadences in an improvised performance. The program is built using a visual programming language called Max, which provides an environment for real-time audio-visual processing and analysis. Recordings of tihais played by tabla master Sandeep Das are sent through the program, resulting in a visualization of the rhythmic pattern overlaid by the recording’s frequency-domain waveform. While visualization systems for instruments are commonly developed in Western musical idioms, they are less so for Hindustani classical music. For audiences unfamiliar with the intricacies of Hindustani classical music, this program provides opportunities for a deeper understanding of the skills executed by tabla artists when performing.</p>
+    </section>
+
+    <section id="story">
+      <h3>The Story</h3>
+      <p>During my junior year of college, I was looking for an opportunity to do some sort of research or project to apply what I learned through my classes. During this process, I realized that I did not have to limit my search to professors within the Computer Science department, as programming is applied to so many fields. An honors advisor mentioned a student who had done their research through with a professor from the Music department, and thus began my search for an interdisciplinary project.</p>
+      <p>When I first contacted Professor Umezaki about potential research opportunities, he brought up a musician he worked with named Sandeep Das, a master performer of the tabla who wanted to find a way to visualize his performances to heighten his audience’s experience. Having learned a form of Indian classical singing myself, this project was the perfect mix of my background in music and my interest in visual computing.</p>
+      <div style="text-align:center">
+        <img id="tabla" src="imgs/tabla_side.png"/>
+        <img id="tabla" src="imgs/tabla_top.png"/>
+      </div>
+      <p class="caption">Illustrations of the tabla.</p>
+      <p>For those unfamiliar, the tabla is a pair of drums played with one’s hands, used mostly in Hindustani and Carnatic classical, traditional, and folk music. Tabla players often use a musical device called a tihai, which is an improvised, rhythmic section with specific guidelines players must follow. Because of the relatively strict nature of tihais, performers internally use certain calculations to correctly compose or improvise a tihai with their own unique colors and characters.</p>
+      <p>Das wanted to have audiences not just hear, but also see tihais being constructed in real time. In his performances, Das interacts with audiences letting them cue a starting point at any point in the rhythmic cycle. At that point, Das would improvise a tihai that would end on the perfectly first beat of the rhythmic cycle. Those who have experienced performances by masters like Das will get a sense that executing the very complicated tihais that he performs is not done through explicit forms of counting. Instead, Das creates them through an embodied form of counting and division that he has internalized over years of practice and learning.</p>
+      <img src="imgs/sandeep_das.jpg" class="center" style="width:40%; height:40%; align: center;"/>
+      <p class="caption" style="">Sandeep Das performing.<p/>
+      <p>The ultimate goal of this project was to provide a visual display of the rhythmic cycle overlaid in real time with a visualization of the tabla sound in order to give more insight into the highly nuanced skill of improvising tihais.</p>
+      <p>Over the course of a year and a half, I was able to achieve this goal under my advisor, Kojiro Umezaki, a professor at UCI, a musician and composer, and a member of the Silkroad Ensemble. I also received funding help from the Undergraduate Research Opportunities Program (UROP) at the University of California, Irvine. I presented an initial version of the project at UROP's 2019 Symposium, then continued to develop the project until the end of my senior year. The project serves as an example of what can be achieved by combining technology and the arts to create something beyond either disciplines by themselves.</p>
+    </section>
+
+    <section id="how">
+      <h3>How it Works</h3>
+      <img src="imgs/final_patcher.png" style="width: 100%; height:100%"/>
+      <p class="caption">The final Max8 patcher.</p>
+      <p>The Surya System is designed to help create a complementary and immersive experience of a live tabla performance. By providing real-time visualization of the tabla beats, the system allows viewers to better understand the performance, enhancing their experience of the music.</p>
+      <p>Essentially, the software takes a live or pre-recorded tabla performance and maps the amplitude of the audio waves to a visualization system. A more detailed process is described below:</p>
+      <ol>
+        <li>The system receives audio input from a live microphone or pre-recorded audio file.</li>
+        <li>The audio input’s signal (currently in the time domain) is sent to a pfft object, which performs a Fourier transform on the signal. This transforms the time domain signal to a frequency domain signal.</li>
+        <li>The frequency domain signal, as well as coordinates for both the circular and horizontal visualizations, are sent to a javascript module.</li>
+        <li>This module takes the frequency domain signal, which is in a linear scale, and transforms it into an 8-bin logarithmic scale. This 8-bin representation of the frequency domain is drawn as a spoke or line in the visualization.</li>
+        <li>Each of the bins’ amplitude in mapped to its own line segment, creating a single line made up of 8 segments representing the lowest to highest frequency ranges. The lowest frequency are in the middle of the circular visualization and the bottom of the horizontal visualization.</li>
+      </ol>
+</p>
+    </section>
+
+
+    <section id="thesis">
+      <h3>Thesis</h3>
+      <p>
+        To read my full thesis, please click here:
+        <a href = "./thesis.pdf" target="blank">Visualization of the Rhythmic Phrases of the Tabla</a>
+      </p>
+    </section>
+
+    <section id="about">
+      <h3>About</h3>
+      <p>This is a research project completed at the University of California, Irvine as a part of the Campuswide Honors Collegium and ICS Honors Programs</p>
+      <p>Author: Lavanya Kukkemane (<a href="mailto:lavanyak814@gmail.com">lavanyak814@gmail.com</a>)</p>
+      <p>Advisor: Kojiro Umezaki (Professor at UCI)</p>
+      <!-- <p>Contact: </p> -->
+      <!-- <p>Honors Project/Thesis at the University of California, Irvine</p> -->
+    </section>
+  <div>
+</div>
+
+</body>
+
+
+</html>
